@@ -33,25 +33,47 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
 clf.fit(x_train, y_train)
 y_preds = clf.predict(x_test)
 y_probs = clf.predict_proba(x_test)
-print(f"The first 10 predictions of having heart disease are: {y_preds[:10]}")
-print(f"The first 10 probabilities of having heart disease are: {y_probs[:10]}")
-print(clf.score(x_train, y_train))
-print(clf.score(x_test, y_test))
+##print(f"The first 10 predictions of having heart disease are: {y_preds[:10]}")
+##print(f"The first 10 probabilities of having heart disease are: {y_probs[:10]}")
+##print(clf.score(x_train, y_train))
+##print(clf.score(x_test, y_test))
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
 
-print(classification_report(y_test, y_preds))
-print(accuracy_score(y_test, y_preds))
-print(confusion_matrix(y_test, y_preds))
+# print(classification_report(y_test, y_preds))
+# print(accuracy_score(y_test, y_preds))
+# print(confusion_matrix(y_test, y_preds))
 
 # Improve a model
 np.random.seed(42)
 for i in range(10, 100, 10):
-    print(f"Trying model with {i} estimators...")
+    # print(f"Trying model with {i} estimators...")
     clf = RandomForestClassifier(n_estimators=i).fit(x_train, y_train)
-    print(f"Model accuracy on test set: {clf.score(x_test, y_test) * 100}%")
+    # print(f"Model accuracy on test set: {clf.score(x_test, y_test) * 100}%")
 
-#Save and load a model
+# Save and load a model
 import pickle
+
 pickle.dump(clf, open("random_forest_model_1.pkl", "wb"))
 loaded_model = pickle.load(open("random_forest_model_1.pkl", "rb"))
-print(loaded_model.score(x_test, y_test))
+# print(loaded_model.score(x_test, y_test))
+
+
+# 1. Getting our data ready to be used with machine learning
+# Three things to do:
+# Split the data into features and labels (usually 'x' and 'y')
+# Filling (also called imputing) or disregarding missing values
+# Converting non-numerical values to numerical values (also called feature coding)
+x = heart_disease.drop("target", axis=1)
+#print(x.head())
+y = heart_disease["target"]
+#print(y.head())
+from sklearn.model_selection import train_test_split
+
+# Split the data into training and testing sets
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2)
+
+# Check the shapes of the training and testing sets
+print("Shape of x_train:", x_train.shape)
+print("Shape of x_test:", x_test.shape)
+print("Shape of y_train:", y_train.shape)
+print("Shape of y_test:", y_test.shape)
